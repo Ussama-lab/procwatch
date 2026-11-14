@@ -1,0 +1,23 @@
+{
+    // Name shown by VS Code when the development container starts
+    "name": "procwatch - Ubuntu 24.04",
+
+    // Build the container using the Dockerfile in this directory
+    "build": {
+        "dockerfile": "Dockerfile",
+        "context": ".."
+    },
+
+    // Keep development work away from the root account
+    "remoteUser": "vscode",
+    // Install the VS Code extensions used for C++ and Python development
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "ms-vscode.cpptools",
+                "ms-vscode.cmake-tools",
+                "ms-python.python"
+            ]
+        }
+    }
+}
