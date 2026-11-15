@@ -44,4 +44,4 @@ The initial release aims to:
 
 The following diagram illustrates the planned internal architecture of `procwatch`.
 
-![System Architecture](diagrams/system-architecture-diagram.drawio.png)
+![System Architecture](diagrams/system-architecture-diagram.png)
