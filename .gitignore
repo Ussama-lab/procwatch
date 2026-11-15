@@ -1,0 +1,12 @@
+# Python virtual environment
+.venv/
+
+# CMake build directory
+build/
+
+# Python cache
+__pycache__/
+.pytest_cache/
+
+# IDE settings
+.vscode/
