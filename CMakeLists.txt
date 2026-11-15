@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.16)
+cmake_minimum_required(VERSION 3.24)
 
 project(procwatch
     VERSION 1.0.0
@@ -35,3 +35,78 @@ FetchContent_MakeAvailable(
     googletest
     nlohmann_json
 )
+
+# Main application
+add_executable(procwatch
+    src/main.cpp
+    src/supervisor.cpp
+    src/proc_reader.cpp
+    src/sampler.cpp
+    src/analyzer.cpp
+    src/report.cpp
+)
+
+# Include directories
+target_include_directories(procwatch
+    PRIVATE
+        ${PROJECT_SOURCE_DIR}/include
+)
+
+# Link dependencies
+target_link_libraries(procwatch
+    PRIVATE
+        nlohmann_json::nlohmann_json
+)
+
+# Compiler warnings
+target_compile_options(procwatch
+    PRIVATE
+        -Wall
+        -Wextra
+        -Wpedantic
+)
+
+# Find Python interpreter
+find_package(Python3 COMPONENTS Interpreter REQUIRED)
+
+# Python component tests
+if(BUILD_TESTING)
+    add_test(
+        NAME python_component_tests
+        COMMAND ${Python3_EXECUTABLE} -m pytest
+                ${PROJECT_SOURCE_DIR}/tests/python
+    )
+endif()
+
+# C++ unit tests
+if(BUILD_TESTING)
+    add_executable(procwatch_tests
+        tests/cpp/test_analyzer.cpp
+        tests/cpp/test_proc_reader.cpp
+        tests/cpp/test_report.cpp
+        tests/cpp/test_sampler.cpp
+        tests/cpp/test_supervisor.cpp
+    )
+
+    target_link_libraries(procwatch_tests
+        PRIVATE
+            GTest::gtest_main
+            nlohmann_json::nlohmann_json
+    )
+
+    target_include_directories(procwatch_tests
+        PRIVATE
+            ${PROJECT_SOURCE_DIR}/include
+    )
+
+    # Compiler warnings for unit tests
+target_compile_options(procwatch_tests
+    PRIVATE
+        -Wall
+        -Wextra
+        -Wpedantic
+)
+
+    include(GoogleTest)
+    gtest_discover_tests(procwatch_tests)
+endif()
