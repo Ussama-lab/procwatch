@@ -86,6 +86,8 @@ if(BUILD_TESTING)
         tests/cpp/test_report.cpp
         tests/cpp/test_sampler.cpp
         tests/cpp/test_supervisor.cpp
+
+        src/proc_reader.cpp
     )
 
     target_link_libraries(procwatch_tests
